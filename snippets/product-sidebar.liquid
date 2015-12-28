@@ -1,0 +1,80 @@
+<div class="collection-sidebar">
+	{% if settings.sidebar_product_product_block %}
+	<div class="product-sidebar-custom">
+	{{ settings.sidebar_product_product_block_code }}
+	</div>
+	{% endif %}
+	{% if settings.sidebar_product_featured_product %}
+	<div class="sidebar-block">
+		<h5>{{ settings.sidebar_product_featured_product_title }}</h5>
+		<div class="featured-products">
+			{% for product in collections.frontpage.products limit: 3 %}
+			<div class="product-line">
+				<div class="product-image">
+					<a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image.src | product_img_url: 'small' }}" alt="{{ product.featured_image.alt | escape }}"></a>
+				</div>
+				<div class="product-info">
+					<a class="product-title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+					<p class="product-price">
+						{% assign on_sale = false %}
+						{% if product.compare_at_price > product.price %}
+							{% assign on_sale = true %}
+						{% endif %}
+						{{ product.price | money }}
+						{% if on_sale %}
+							<span class="price-compare">{{ product.compare_at_price | money }}</span>
+						{% endif %}
+					</p>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	{% if settings.sidebar_product_product_type %}
+		<div class="sidebar-block">
+		<h5>{{ settings.sidebar_product_product_type_title }}</h5>
+		{% if collection.all_types.size > 0 %}
+			<ul>
+				{% for type in collection.all_types %}
+					{% if collection.current_type == type %}
+						<li class="active-filter">
+							{{ type | link_to_remove_type }}
+						</li>
+					{% else %}
+						<li>
+							{{ type | link_to_type }}
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Add a type to your products for this list to build itself. All lists are created in <strong>collection-tags.liquid</strong>.</p>
+		{% endif %}
+		</div>
+	{% endif %}
+	{% if settings.sidebar_product_vendor %}
+	<div class="sidebar-block">
+	<h5>{{ settings.sidebar_product_vendor_title }}</h5>
+	{% if collection.all_vendors.size > 0 %}
+
+		<ul>
+			{% for vendor in collection.all_vendors %}
+				{% if collection.current_vendor == vendor %}
+					<li class="active-filter">
+						{{ vendor | link_to_remove_vendor }}
+					</li>
+				{% else %}
+					<li>
+						{{ vendor | link_to_vendor }}
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+	{% else %}
+		<p>Add a vendor to your product for this list to build itself.</p>
+	{% endif %}
+	</div>
+	{% endif %}
+</div>

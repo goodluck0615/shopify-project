@@ -1,0 +1,102 @@
+{% comment %}
+
+	This snippet is used to showcase each product during the loop,
+	'for product in collection.products' in collection.liquid.
+
+	A liquid variable (grid_item_width) is set just before the this
+	snippet is included to change the size of the container.
+	Once the variable is set on a page, all future instances of this
+	snippet will use that width. Overwrite the variable to adjust this.
+
+	Example
+		- assign grid_item_width = 'large--one-quarter medium--one-half'
+
+{% endcomment %}
+
+{% comment %}
+	Set the default grid_item_width if no variable is set
+{% endcomment %}
+{% unless grid_item_width %}
+	{% assign grid_item_width = 'large--one-quarter medium--one-half' %}
+{% endunless %}
+
+{% comment %}
+	Check if the product is on sale and set a variable to be used below.
+{% endcomment %}
+{% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+	{% assign on_sale = true %}
+{% endif %}
+
+{% comment %}
+	Check if the product is sold out and set a variable to be used below.
+{% endcomment %}
+{% assign sold_out = true %}
+{% if product.available	%}
+	{% assign sold_out = false %}
+{% endif %}
+
+{% comment %}
+	Set a class for sold-out and on-sale items
+{% endcomment %}
+<div class="grid-item {{grid_item_width}}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}">
+	<div class="product-wrapper">
+		{% comment %}
+			Link to your product with the 'within: collection' filter for the link to be aware of the collection.
+			This allows you to create collection-based navigation on the product page.
+
+			Results of using 'within: collection':
+			- Instead of a URL with /products/product-handle
+				you would get /collections/collection-handle/products/product-handle
+
+			For more info on navigation within a collection
+				- http://docs.shopify.com/support/your-store/collections/how-to-navigate-within-a-collection
+
+		{% endcomment %}
+		{% if sold_out %}
+		<span class="grid-item-label soldout">Sold Out</span>
+		{% endif %}
+		{% if on_sale %}
+			<span class="grid-item-label sale">On Sale</span>
+		{% endif %}
+		<div class="product-grid-images">
+			
+          	<a href="{{ product.url | within: collection }}"><img class="featured-image" src="{{ product.featured_image.src | product_img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}"></a>
+			{% assign index = 1 %}
+			{% for image in product.images limit:2 %}
+			{% if index == 2 %}
+          	<a href="{{ product.url | within: collection }}"><img class="first-image" src="{{ image.src | product_img_url: 'large' }}"></a>
+			{% endif %}
+			{% assign index = index | plus: 1 %}
+			{% endfor %}
+			
+			{% assign idx = 1 %}
+			{% for image in product.images %}
+			{% if idx == 1 %}
+				<a href="{{ image.src | product_img_url: '1024x1024' }}" rel="{{ product.handle }}" class="fancybox zoom-icon" title="View all images"><i class="fa fa-image"></i></a>
+			{% else %}
+				<a rel="{{ product.handle }}" class="fancybox" href="{{ image.src | product_img_url: '1024x1024' }}"></a>
+			{% endif %}
+			{% assign idx = idx | plus: 1 %}
+			{% endfor %}
+			
+			<a href="#" class="quick-view" rel="{{ product.handle }}" title="Quick view"><i class="fa fa-eye"></i></a>
+			
+		</div>
+		<div class="product-grid-info">
+			<a class="product-title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+			<p class="product-price">
+				{{ product.price | money }}
+				{% if on_sale %}
+					<span class="price-compare">{{ product.compare_at_price | money }}</span>
+				{% endif %}
+			</p>
+<!--             <p class="grid_description">
+          		{{ product.description | strip_html | truncatewords: 50 }}
+            </p> -->
+			<p class="product-link text-center">
+				<a href="{{ product.url | within: collection }}"><i class="fa fa-shopping-cart"></i>{% if product.price_varies %}Select Options{% else %}View Details{% endif %}</a>
+			</p>
+		</div>
+	</div>
+</div>

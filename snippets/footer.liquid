@@ -1,0 +1,157 @@
+<footer class="site-footer margin-top" role="contentinfo">
+	<div class="wrapper">
+		<div class="grid">
+			{% assign footercols = 0 %}
+			{% if settings.footer_display_contact %}
+				{% assign footercols = footercols | plus: 1 %}
+			{% endif %}
+			{% if settings.footer_display_social %}
+				{% assign footercols = footercols | plus: 1 %}
+			{% endif %}
+			{% if settings.footer_display_menu %}
+				{% assign footercols = footercols | plus: 1 %}
+			{% endif %}
+			{% if settings.footer_display_block %}
+				{% assign footercols = footercols | plus: 1 %}
+			{% endif %}
+			
+			{% case footercols %}
+				{% when 1 %}
+					{% assign footercolclass = 'large--one-whole' %}
+				{% when 2 %}
+					{% assign footercolclass = 'large--one-half' %}
+				{% when 3 %}
+					{% assign footercolclass = 'large--one-third' %}
+				{% else %}
+					{% assign footercolclass = 'large--one-quarter' %}
+			{% endcase %}
+			
+			{% if settings.footer_display_contact %}
+			<div class="grid-item medium--one-whole {{ footercolclass }}">
+				<h3>{{ settings.footer_contact_title }}</h3>
+				<div class="contact-info">
+					<ul>
+						{% if settings.footer_contact_address != blank %}
+						<li>
+							<div class="global-table">
+								<div class="global-row">
+									<div class="global-cell" style="width: 50px;">
+										<i class="fa fa-map-marker"></i>
+									</div>
+									<div class="global-cell">
+										{{ settings.footer_contact_address }}
+									</div>
+								</div>
+							</div>
+						</li>
+						{% endif %}
+						{% if settings.footer_contact_phone1 != blank %}
+						<li>
+							<div class="global-table">
+								<div class="global-row">
+									<div class="global-cell" style="width: 50px;">
+										<i class="fa fa-phone"></i>
+									</div>
+									<div class="global-cell">
+										{{ settings.footer_contact_phone1 }}{% if settings.footer_contact_phone2 != blank %}<br />{{ settings.footer_contact_phone2 }}{% endif %}
+									</div>
+								</div>
+							</div>
+						</li>
+						{% endif %}
+						{% if settings.footer_contact_email1 != blank %}
+						<li>
+							<div class="global-table">
+								<div class="global-row">
+									<div class="global-cell" style="width: 50px;">
+										<i class="fa fa-envelope-o"></i>
+									</div>
+									<div class="global-cell">
+										{{ settings.footer_contact_email1 }}{% if settings.footer_contact_email2 != blank %}<br />{{ settings.footer_contact_email2 }}{% endif %}
+									</div>
+								</div>
+							</div>
+						</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+			{% endif %}
+
+			{% if settings.footer_display_social %}
+			<div class="grid-item medium--one-whole {{ footercolclass }} ">
+				<h3>{{ settings.footer_social_title }}</h3>
+
+				{% comment %}
+					Loop through the persistent theme settings and list out each social network link.
+				{% endcomment %}
+				<ul class="inline-list social-icons">
+					{% if settings.twitter_link != blank %}<li class="twitter"><a href="{{ settings.twitter_link }}" title="{{ shop.name }} on Twitter"><i class="fa fa-twitter"></i>Twitter</a></li>{% endif %}
+					{% if settings.facebook_link != blank %}<li class="facebook"><a href="{{ settings.facebook_link }}" title="{{ shop.name }} on Facebook"><i class="fa fa-facebook"></i>Facebook</a></li>{% endif %}
+					{% if settings.linkedin_link != blank %}<li class="linkedin"><a href="{{ settings.linkedin_link }}" title="{{ shop.name }} on LinkedIn"><i class="fa fa-linkedin"></i>LinkedIn</a></li>{% endif %}
+					{% if settings.pinterest_link != blank %}<li class="pinterest"><a href="{{ settings.pinterest_link }}" title="{{ shop.name }} on Pinterest"><i class="fa fa-pinterest"></i>Pinterest</a></li>{% endif %}
+					{% if settings.google_plus_link != blank %}<li class="google-plus"><a href="{{ settings.google_plus_link }}" title="{{ shop.name }} on Google+"><i class="fa fa-google-plus"></i>Google+</a></li>{% endif %}
+					{% if settings.instagram_link != blank %}<li class="instagram"><a href="{{ settings.instagram_link }}" title="{{ shop.name }} on Instagram"><i class="fa fa-instagram"></i>Instagram</a></li>{% endif %}
+					{% if settings.tumblr_link != blank %}<li class="tumblr"><a href="{{ settings.tumblr_link }}" title="{{ shop.name }} on Tumblr"><i class="fa fa-tumblr"></i>Tumblr</a></li>{% endif %}
+					{% if settings.youtube_link != blank %}<li class="youtube"><a href="{{ settings.youtube_link }}" title="{{ shop.name }} on YouTube"><i class="fa fa-youtube"></i>YouTube</a></li>{% endif %}
+					{% if settings.vimeo_link != blank %}<li class="vimeo"><a href="{{ settings.vimeo_link }}" title="{{ shop.name }} on Vimeo"><i class="fa fa-vimeo-square"></i>Vimeo</a></li>{% endif %}
+				</ul>
+			</div>
+			{% endif %}
+			{% if settings.footer_display_menu %}
+			<div class="grid-item medium--one-whole {{ footercolclass }}">
+				<h3>{{ settings.footer_menu_title }}</h3>
+				<div class="footer-menu">
+					<ul>
+					{% for link in linklists.footer.links %}
+						<li>
+							<a href="{{ link.url }}">{{ link.title }}</a>
+						</li>
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+			{% endif %}
+			{% if settings.footer_display_block %}
+			<div class="grid-item medium--one-whole {{ footercolclass }}">
+				<h3>{{ settings.footer_block_title }}</h3>
+				<div class="footer-custom-block">
+					{{ settings.footer_block_code }}
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="bottom-info">
+		<div class="wrapper">
+			<div class="grid">
+				<div class="grid-item large--one-half medium--one-half">
+					<div class="copyright-info">
+					{% if settings.display_copyright %}
+						{{ settings.copyright_info }}
+					{% endif %}
+					</div>
+					<div class="powered-info">
+					{% if settings.display_powered %}
+						{{ powered_by_link }}
+					{% endif %}
+					</div>
+				</div>
+				<div class="grid-item large--one-half medium--one-half">
+					<ul class="inline-list payment-icons text-center">
+						{% if settings.payment_amex %}<li><span class="amex"></li>{% endif %}
+						{% if settings.payment_cirrus %}<li><span class="cirrus"></li>{% endif %}
+						{% if settings.payment_discover %}<li><span class="discover"></li>{% endif %}
+						{% if settings.payment_google %}<li><span class="google"></li>{% endif %}
+						{% if settings.payment_maestro %}<li><span class="maestro"></li>{% endif %}
+						{% if settings.payment_mastercard %}<li><span class="mastercard"></li>{% endif %}
+						{% if settings.payment_paypal %}<li><span class="paypal"></li>{% endif %}
+						{% if settings.payment_visa %}<li><span class="visa"></li>{% endif %}
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<a class="gototop"><i class="fa fa-chevron-up"></i></a>
+</footer>

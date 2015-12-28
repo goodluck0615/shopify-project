@@ -1,0 +1,49 @@
+{% if cart.item_count > 0 %}
+	<div class="small-cart-rows">
+	{% for item in cart.items %}
+		<div class="small-cart-row grid small-cart-product" id="item-{{ item.variant_id }}">
+			<div class="grid-item large--one-quarter medium--one-quarter small--one-quarter small-cart-image">
+				<a href="{{ item.product.url | within: collections.all }}">
+					<!--<img src="{{ item.product.featured_image.src | product_img_url: 'small' }}" alt="{{ item.title | escape }}">-->
+                  	<img src="{{ item | img_url: 'small' }}"  alt="{{ item.title | escape }}" />
+				</a>
+			</div>
+			<div class="grid-item large--three-quarters medium--three-quarters small--three-quarters small-cart-product-info">
+				<a class="small-cart-title" href="{{ item.product.url }}">
+					{{ item.title }}
+				</a>
+				<span class="small-cart-price">{{ item.price | money }}<span class="small-cart-quantity"> x {{ item.quantity }}</span></span>
+				<a class="small-cart-remove" href="/cart/change/{{ item.variant.id }}?quantity=0" data-id="{{ item.id }}" title="Remove"><i class="fa fa-times-circle"></i></a>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+	<h3 style="display: none;" class="small-cart-empty-heading">Your cart is empty.</h3>
+	<div class="small-cart-row grid">
+		<div class="grid-item large--one-whole text-right">
+			<span class="small-cart-total">Total: <span id="cartCost">{{ cart.total_price | money }}</span></span>
+		</div>
+		<div class="grid-item large--one-whole small-cart-btns">
+			<div class="small-cart-btns-wrapper">
+				<a style="display: none;" class="smart-cart-shop-link btn" href="/collections/all">Continue shopping</a>
+				<a class="smart-cart-checkout-link btn" href="/checkout">Checkout</a>
+				<a class="smart-cart-cart-link btn" href="/cart">View Cart</a>
+			</div>
+		</div>
+	</div>
+{% else %}
+	<h3 class="small-cart-empty-heading">Your cart is empty.</h3>
+	<div class="small-cart-rows"></div>
+	<div class="small-cart-row grid">
+		<div class="grid-item large--one-whole text-right">
+			<span class="small-cart-total">Total: <span id="cartCost">{{ cart.total_price | money }}</span></span>
+		</div>
+		<div class="grid-item large--one-whole small-cart-btns">
+			<div class="small-cart-btns-wrapper">
+				<a class="smart-cart-shop-link btn" href="/collections/all">Continue shopping</a>
+				<a style="display: none;" class="smart-cart-checkout-link btn" href="/checkout">Checkout</a>
+				<a style="display: none;" class="smart-cart-cart-link btn" href="/cart">View Cart</a>
+			</div>
+		</div>
+	</div>
+{% endif %}

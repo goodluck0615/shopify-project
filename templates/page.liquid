@@ -1,0 +1,26 @@
+<header class="page-header">
+	<div class="wrapper">
+		<div class="global-table">
+			<div class="global-row">
+				<div class="global-cell page-title">
+					<h2>{{ page.title }}</h2>
+				</div>
+				<div class="global-cell page-breadcrumb">
+					{% include 'breadcrumb' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="page margin-top content-page">
+	<div class="wrapper">
+		<div class="grid">
+			<div class="grid-item large--one-whole">
+				{% comment %}
+					Regular page content goes here.
+				{% endcomment %}
+				{{ page.content }}
+			</div>
+		</div>
+	</div>
+</div>

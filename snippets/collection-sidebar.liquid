@@ -1,0 +1,166 @@
+{% comment %}
+
+	Side navigation for the product types, vendors, and tags.
+	These can be based on the current collection or all products. Details in comments below.
+
+	Note: Clicking on a tag will filter the products within the current collection.
+	Clicking on a type or vendor link will take you out of the current collection
+	to a standalone collection page. E.g. /collections/vendors?q=Pepsi
+
+{% endcomment %}
+
+{% comment %}
+	Product types in the current collection
+		- List all of the shop's types with collections.all.all_types
+		- List the current collection's types with collection.all_types
+{% endcomment %}
+<div class="collection-sidebar">
+	
+	{% comment %}
+		Show the description for the current collection
+	{% endcomment %}
+	{% if settings.sidebar_collection_desc %}
+		{% if collection.description.size > 0 %}
+		<div class="sidebar-block">
+			<h5>{{ collection.title }}</h5>
+			<div class="collection-desc">
+				{{ collection.description }}
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+  
+  	{% if settings.sidebar_featured_product %}
+	<div class="sidebar-block">
+	<h5>{{ settings.sidebar_featured_product_title }}</h5>
+	<div class="featured-products">
+		{% for product in collections.frontpage.products limit: 3 %}
+		<div class="product-line">
+			<div class="product-image">
+				<a href="{{ product.url | within: collection }}"><img src="{{ product.featured_image.src | product_img_url: 'small' }}" alt="{{ product.featured_image.alt | escape }}"></a>
+			</div>
+			<div class="product-info">
+				<a class="product-title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+				<p class="product-price">
+					{% assign on_sale = false %}
+					{% if product.compare_at_price > product.price %}
+						{% assign on_sale = true %}
+					{% endif %}
+					{{ product.price | money }}
+					{% if on_sale %}
+						<span class="price-compare">{{ product.compare_at_price | money }}</span>
+					{% endif %}
+				</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	</div>
+	{% endif %}
+  
+	{% if settings.sidebar_product_type %}
+		<div class="sidebar-block">
+		<h5>{{ settings.sidebar_product_type_title }}</h5>
+		{% if collection.all_types.size > 0 %}
+			<ul>
+				{% comment %}
+					And for the good stuff, loop through the tags themselves.
+				{% endcomment %}
+
+				{% for type in collection.all_types %}
+					{% if collection.current_type == type %}
+						<li class="active-filter">
+							{{ type | link_to_remove_type }}
+						</li>
+					{% else %}
+						<li>
+							{{ type | link_to_type }}
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Add a type to your products for this list to build itself. All lists are created in <strong>collection-tags.liquid</strong>.</p>
+		{% endif %}
+		
+		{% comment %}
+			Product vendors in the current collection
+				- List all of the shop's vendors with collections.all.all_vendors
+				- List the current collection's vendors with collection.all_vendors
+		{% endcomment %}
+		</div>
+	{% endif %}
+	{% if settings.sidebar_vendor %}
+	<div class="sidebar-block">
+	<h5>{{ settings.sidebar_vendor_title }}</h5>
+	{% if collection.all_vendors.size > 0 %}
+
+		<ul>
+			{% comment %}
+				And for the good stuff, loop through the tags themselves.
+			{% endcomment %}
+			{% for vendor in collection.all_vendors %}
+				{% if collection.current_vendor == vendor %}
+					<li class="active-filter">
+						{{ vendor | link_to_remove_vendor }}
+					</li>
+				{% else %}
+					<li>
+						{{ vendor | link_to_vendor }}
+					</li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+
+	{% else %}
+		<p>Add a vendor to your product for this list to build itself.</p>
+	{% endif %}
+	</div>
+	{% endif %}
+	
+	{% if settings.sidebar_product_tag %}
+	<div class="sidebar-block tags">
+	{% comment %}
+		Product tags in the current collection
+	{% endcomment %}
+	<h5>{{ settings.sidebar_product_tag_title }}</h5>
+	{% if collection.all_tags.size > 0 %}
+
+		{% comment %}
+			Say we want to provide a 'catch-all' link at the top of the list,
+			we'd check against the collection.handle, product type, and vendor.
+		{% endcomment %}
+
+		<ul>
+			{% comment %}
+				And for the good stuff, loop through the tags themselves.
+			{% endcomment %}
+			{% for tag in collection.all_tags %}
+				{% if current_tags contains tag %}
+					<li class="active-filter">
+						{{ tag | link_to_remove_tag: tag }}
+					</li>
+				{% else %}
+					<li>
+						{% comment %}
+							Use link_to_add_tag if you want to allow filtering
+							by multiple tags
+						{% endcomment %}
+						{{ tag | link_to_tag: tag }}
+					</li>
+				{% endif %}
+			{% endfor %}
+
+		</ul>
+
+	{% else %}
+
+		<p>Add tags to your products for this list to build itself.</p>
+
+	{% endif %}
+	</div>
+	{% endif %}
+	{% if settings.sidebar_product_block %}
+	{{ settings.sidebar_product_block_code }}
+	{% endif %}
+</div>

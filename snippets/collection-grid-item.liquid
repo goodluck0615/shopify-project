@@ -1,0 +1,45 @@
+{% comment %}
+
+	This snippet is used to showcase each collection during the loop,
+	'for product in collection.products' in list-collections.liquid.
+
+{% endcomment %}
+
+{% comment %}
+	Set the default collection_item_width if no variable is set
+{% endcomment %}
+{% unless collection_item_width %}
+	{% assign collection_item_width = 'medium--one-half large--one-third' %}
+{% endunless %}
+
+<div class="grid-item {{collection_item_width}} text-center hover_cursor">
+
+	{% comment %}
+		Use capture to put the collection title in a variable that is used in liquid filters
+	{% endcomment %}
+	{% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+
+	
+      <div class="collection-image" onclick="window.open('http://www.sumpalarm.com{{ collection.url }}', '_self');" style="cursor: pointer;">
+		{% if collection.image %}
+      {{ collection.image.src | collection_img_url: 'grande' | img_tag: collection_title }}
+		{% else %}
+      {{ collection.products.first.featured_image | product_img_url: 'grande' | img_tag: collection_title }}
+		{% endif %}
+	  </div>
+    
+  <div class="collection-desc"><a href="{{ collection.url }}" title="Browse our {{ collection_title }} collection">{{ collection.description }}</a></div>
+	<h3 class="h5">
+		<a href="{{ collection.url }}" title="Browse our {{ collection_title }} collection">{{ collection.title }}</a>
+		<small>({{ collection.all_products_count }} {{ collection.all_products_count | pluralize: 'item', 'items' }})</small>
+	</h3>
+	<div class="shadow"></div>
+</div>
+<script>
+jQuery('.hover_cursor').click(function(e) {
+
+    if(jQuery(this).find('a').attr('href'))
+        window.location.href = jQuery(this).find('a').attr('href');       
+    e.preventDafault();
+});
+</script>

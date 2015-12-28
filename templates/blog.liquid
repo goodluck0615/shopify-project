@@ -1,0 +1,124 @@
+{% comment %}
+
+	Loop through a defined number of articles with the 'paginate' tag.
+	Don't forget to close the tag after your loop.
+
+{% endcomment %}
+{% capture amount_post_per_page %} {{ settings.post_per_page }} {% endcapture %}
+{% paginate blog.articles by amount_post_per_page %}
+
+{% comment %}
+	This template is also used for listing out articles of a specific tag.
+	You can change layouts or styles by checking if current_tags is true.
+{% endcomment %}
+<header class="page-header">
+	<div class="wrapper">
+		<div class="global-table">
+			<div class="global-row">
+				<div class="global-cell page-title">
+					{% if current_tags %}
+					<h2>{{ blog.title | link_to: blog.url }} &raquo; {{ current_tags.first }}</h2>
+					{% else %}
+					<h2>{{ blog.title }}</h2>
+					{% endif %}
+				</div>
+				<div class="global-cell page-breadcrumb">
+					{% include 'breadcrumb' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+{% if settings.sidebar_blog %}
+	{% assign blog_grid_class = 'three-quarters' %}
+{% else %}
+	{% assign blog_grid_class = 'one-whole' %}
+{% endif %}
+{% if settings.sidebar_blog_position == 'left' %}
+	{% assign sidebar_blog_position_class = 'sidebar_left' %}
+{% else %}
+	{% assign sidebar_blog_position_class = 'sidebar_right' %}
+{% endif %}
+<div class="page margin-top blog">
+	<div class="wrapper">
+		<div class="grid">
+
+			<div class="grid-item large--{{ blog_grid_class }} {{ sidebar_blog_position_class }}">
+
+			{% comment %}
+				Loop through each article in your blog. This is limited to what you set for pagination above.
+
+				For more info on article liquid tags:
+				- http://docs.shopify.com/themes/liquid-variables/article
+			{% endcomment %}
+
+			{% for article in blog.articles %}
+				<div class="post-row">
+					<div class="post-image">
+						<span class="time" pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+							<span class="post-day">{{ article.published_at | date: '%d' }}</span>
+							<span class="post-month">{{ article.published_at | date: '%B' }}</span>
+						</span>
+						<a href="{{ article.url }}">
+							{% assign my_image_url=article.content | escape %}
+							{% if my_image_url contains '&lt;img' %}
+								{% assign my_image_url = my_image_url | split: 'src=&quot;' %}
+								{% assign my_image_url = my_image_url[1] | split: '&quot;' %}
+								{% assign my_image_url = my_image_url[0] | remove: '//cdn' %}
+								{% assign my_image_url = my_image_url | remove: 'http:http://' %}
+								{% assign my_image_url = my_image_url | remove: 'https:' %}
+								<img src="{{ my_image_url | prepend: 'http://cdn' }}" alt="" />
+							{% endif %}
+							<span class="clearfix"></span>
+						</a>
+					</div>
+					<div class="post-info">
+						<h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+						<div class="blog_author">
+							<span class="author">Posted by {{ article.author }}</span>
+							{% if blog.comments_enabled? %}
+							<div class="comment-count">
+								<a href="{{ article.url }}#comments">
+								<i class="fa fa-comments"></i>{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment','comments' }}
+								</a>
+							</div>
+							{% endif %}
+						</div>
+
+						{% comment %}
+						Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
+						Since this is just a listing page, you can either use the excerpt or truncate the full article.
+						{% endcomment %}
+						<div class="post-excerpt">
+						{% if article.excerpt.size > 0 %}
+							{{ article.excerpt }}
+						{% else %}
+							<p>{{ article.content | strip_html | truncatewords: 50 }}</p>
+						{% endif %}
+						</div>
+						<ul class="post-tags">
+							{% include 'tags-article' %}
+						</ul>
+
+						<a class="blog-read-more" href="{{ article.url }}">Read More</a>
+
+					</div>
+				</div>
+			{% endfor %}
+
+			{% if paginate.pages > 1 %}
+			<div class="text-center">
+				{% include 'pagination-custom' %}
+			</div>
+			{% endif %}
+
+			</div>
+
+			<div class="grid-item large--one-quarter {{ sidebar_blog_position_class }}">
+			{% include 'blog-sidebar' %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endpaginate %}

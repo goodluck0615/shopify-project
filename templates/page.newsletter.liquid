@@ -1,0 +1,67 @@
+<div class="page content-page page-newsletter">
+  <div class="grid">
+    <div class="grid-item large--one-whole">
+      {% comment %}
+      Regular page content goes here.
+      {% endcomment %}
+
+      {% assign pagecontent = page.content %}
+
+      {% if pagecontent contains '[newsletter]' %}
+
+      {% capture newsletter_code %} <div class="newsletter">
+      <div class="newsletter-blur">
+        <div class="wrapper">
+          <div class="global-table">
+            <div class="global-row">
+              <div class="global-cell">
+                <div class="newsletter-intro">{{ settings.newsletter_intro }}</div>
+                {% include 'newsletter-form' %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      {% endcapture %}
+
+      {% capture pagecontent %}{{ pagecontent | replace: '[newsletter]', newsletter_code }} {% endcapture %}
+
+      {% endif %}
+
+      {% if pagecontent contains '[ribbon]' %}
+      {% capture ribbon_start %}
+      <div class="ribbon-bottom margin-top">
+        <div class="wrapper">
+          {% endcapture %}
+          {% capture pagecontent %}{{ pagecontent | replace: '[ribbon]', ribbon_start }} {% endcapture %}
+          {% endif %}
+
+      {% if pagecontent contains '[/ribbon]' %}
+      	{% capture ribbon_end %}
+      			</div>
+          	</div>
+      	{% endcapture %}
+     	{% capture pagecontent %}{{ pagecontent | replace: '[/ribbon]', ribbon_end }} {% endcapture %}
+      {% endif %}
+      
+      {% if pagecontent contains '[content]' %}
+      	{% capture content_start %}
+      		<div class="page-content margin-top">
+        		<div class="wrapper">
+        {% endcapture %}
+        {% capture pagecontent %}{{ pagecontent | replace: '[content]', content_start }} {% endcapture %}
+      {% endif %}
+
+      {% if pagecontent contains '[/content]' %}
+          {% capture content_end %}
+        		</div>
+      		</div>
+      	  {% endcapture %}
+      	  {% capture pagecontent %}{{ pagecontent | replace: '[/content]', content_end }} {% endcapture %}
+      {% endif %}
+
+      {{ pagecontent }}
+    </div>
+  </div>
+</div>

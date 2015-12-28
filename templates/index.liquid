@@ -1,0 +1,509 @@
+{% comment %}
+
+	This is the homepage of your site.
+
+	More info on global variables (available on all templates):
+		- http://docs.shopify.com/themes/liquid-variables/global
+{% endcomment %}
+{% assign words = settings.homepage_order | split: '-' %}
+{% for word in words %}
+
+	{% if word == 'A' %}
+		{% if settings.use_slider %}
+			<div class="slider-home">
+				<div class="flexslider">
+					<ul class="slides">
+						{% if settings.use_slide1 %}
+							<li>
+								{{ 'slide1.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide1_title != blank %}
+									<div class="slide-title">{{ settings.slide1_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide1_desc != blank %}
+									<div class="slide-desc">{{ settings.slide1_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide2 %}
+							<li>
+								{{ 'slide2.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide2_title != blank %}
+									<div class="slide-title">{{ settings.slide2_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide2_desc != blank %}
+									<div class="slide-desc">{{ settings.slide2_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide3 %}
+							<li>
+								{{ 'slide3.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide3_title != blank %}
+									<div class="slide-title">{{ settings.slide3_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide3_desc != blank %}
+									<div class="slide-desc">{{ settings.slide3_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide4 %}
+							<li>
+								{{ 'slide4.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide4_title != blank %}
+									<div class="slide-title">{{ settings.slide4_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide4_desc != blank %}
+									<div class="slide-desc">{{ settings.slide4_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide5 %}
+							<li>
+								{{ 'slide5.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide5_title != blank %}
+									<div class="slide-title">{{ settings.slide5_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide5_desc != blank %}
+									<div class="slide-desc">{{ settings.slide5_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide6 %}
+							<li>
+								{{ 'slide6.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide6_title != blank %}
+									<div class="slide-title">{{ settings.slide6_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide6_desc != blank %}
+									<div class="slide-desc">{{ settings.slide6_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide7 %}
+							<li>
+								{{ 'slide7.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide7_title != blank %}
+									<div class="slide-title">{{ settings.slide7_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide7_desc != blank %}
+									<div class="slide-desc">{{ settings.slide7_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide8 %}
+							<li>
+								{{ 'slide8.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide8_title != blank %}
+									<div class="slide-title">{{ settings.slide8_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide8_desc != blank %}
+									<div class="slide-desc">{{ settings.slide8_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide9 %}
+							<li>
+								{{ 'slide9.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide9_title != blank %}
+									<div class="slide-title">{{ settings.slide9_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide9_desc != blank %}
+									<div class="slide-desc">{{ settings.slide9_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+						{% if settings.use_slide10 %}
+							<li>
+								{{ 'slide10.jpg' | asset_url | img_tag }}
+								<div class="slide-text">
+									{% if settings.slide10_title != blank %}
+									<div class="slide-title">{{ settings.slide10_title }}</div>
+									<div class="clearfix"></div>
+									{% endif %}
+									{% if settings.slide10_desc != blank %}
+									<div class="slide-desc">{{ settings.slide10_desc }}</div>
+									{% endif %}
+								</div>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'B' %}
+		{% if settings.use_ribbon_slider %}
+			{% if settings.use_ribbon_slider_margin %}
+				{% assign margin_class = 'margin-top' %}
+			{% else %}
+				{% assign margin_class = '' %}
+			{% endif %}
+			<div class="ribbon-slider {{ margin_class }}">
+				<div class="wrapper">
+					{{ settings.ribbon_slider_text }}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		{% endif %}
+	{% endif %}
+	{% if word == 'C' %}
+		{% if settings.use_welcome %}
+		<div class="margin-top">
+			<div class="welcome-home wrapper">
+				<div class="grid-uniform">
+				{% if settings.use_welcome_image %}
+					{% assign welcome_class = 'grid-item large--one-half' %}
+					<div class="welcome-image text-center {{ welcome_class }}">
+						<img src="{{ 'welcome_image.png' | asset_url }}" alt="" />
+					</div>
+				{% else %}
+					{% assign welcome_class = 'grid-item large--one-whole' %}
+				{% endif %}
+					<div class="welcome-text text-center {{ welcome_class }}">
+						<h3 class="welcome-title">{{ settings.welcome_title }}</h3>
+						<div class="welcome-desc">{{ settings.welcome_desc }}</div>
+						{% if settings.use_welcome_link %}
+						<p class="welcome-link"><a class="btn btn-secondary" href="{{ settings.welcome_link }}">{{ settings.welcome_link_text }}</a></p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'D' %}
+		{% if settings.use_frontpage_collections %}
+		{% if settings.use_frontpage_collections_bg %}
+			{% assign collections_class = 'section bg-grey'%}
+		{% endif %}
+		<div class="margin-top {{ collections_class }}">
+			<div class="wrapper frontpage-collections">
+				<h2 class="text-left">{{ settings.frontpage_collections_title }}</h2>
+				<div class="grid-uniform collections">
+					{% assign isEmpty = true %}
+					{% for collection in collections %}
+
+						{% unless collection.handle == 'frontpage' %}
+						{% assign isEmpty = false %}
+						{% if settings.frontpage_collections_cols == '3' %}
+							{% capture collection_item_width %} large--one-third {% endcapture %}
+						{% else %}
+							{% capture collection_item_width %} large--one-quarter {% endcapture %}
+						{% endif %}
+						{% include 'collection-grid-item' %}
+						{% endunless %}
+
+					{% endfor %}
+				</div>
+              <div class="mobile_product">
+              	{% for collection in collections %}
+
+						{% unless collection.handle == 'frontpage' %}
+						{% assign isEmpty = false %}
+						{% if settings.frontpage_collections_cols == '3' %}
+							{% capture collection_item_width %} large--one-third {% endcapture %}
+						{% else %}
+							{% capture collection_item_width %} large--one-quarter {% endcapture %}
+						{% endif %}
+						{% include 'collection-grid-item' %}
+						{% endunless %}
+
+					{% endfor %}
+              </div>
+				{% if isEmpty %}
+					<div class="grid-item-empty">
+						<p>You don't have any collections to show here. <a href="/admin/custom_collections">Add some collections</a> to go along with the default Frontpage.</p>
+					</div>
+					<div class="grid-item-empty">
+						<div class="grid-uniform">
+						<div class="grid-item large--one-third medium--one-half text-center">
+							<div class="demo-image">
+							Collection Image
+							</div>
+							<p><a href="/admin/custom_collections">Example Collection Title</a></p>
+						</div>
+						<div class="grid-item large--one-third medium--one-half text-center">
+							<div class="demo-image">
+							Collection Image
+							</div>
+							<p><a href="/admin/custom_collections">Example Collection Title</a></p>
+						</div>
+						<div class="grid-item large--one-third medium--one-half text-center">
+							<div class="demo-image">
+							Collection Image
+							</div>
+							<p><a href="/admin/custom_collections">Example Collection Title</a></p>
+						</div>
+						</div>
+					</div>
+					{% endif %}
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'E' %}
+		{% if settings.use_frontpage_collection %}
+		<div class="margin-top">
+			<div class="wrapper product-collection">
+				<h2 class="text-left">{{ settings.frontpage_collection_title }}</h2>
+				{% comment %}
+					Use class grid-uniform to have evenly sized columns clear
+					each other properly at each breakpoint.
+				{% endcomment %}
+				<div class="grid-uniform">
+
+					{% comment %}
+						Loop through products in your Frontpage collection.
+						This collection is created by default, but you must add products to it.
+					{% endcomment %}
+					{% capture collection_product_amount %} {{ settings.frontpage_collection_amount }} {% endcapture %}
+					{% for product in collections.frontpage.products limit: collection_product_amount %}
+
+						{% comment %}
+							Change the grid item width by using classes from the grid in
+							the grid_item_width variable.
+
+							Example:
+								- {% assign grid_item_width = 'large--one-third medium--one-half' %}
+						{% endcomment %}
+						{% assign grid_item_width = 'large--one-quarter medium--one-half' %}
+						{% include 'product-grid-item' %}
+
+					{% else %}
+
+						<div class="grid-item">
+							<p>You have no products in your Frontpage collection. This placeholder will appear until you <a href="/admin/custom_collections">add a product to this collection</a>.</p>
+						</div>
+
+						<div class="grid-item">
+							<div class="grid-uniform">
+								<div class="grid-item large--one-quarter medium--one-half text-center">
+									<a href="/admin/products" class="demo-image">
+										Add a Product
+									</a>
+									<p><a href="/admin/products">Example Product Title</a> $19.99</p>
+								</div>
+								<div class="grid-item large--one-quarter medium--one-half text-center">
+									<a href="/admin/products" class="demo-image">
+										Add a Product
+									</a>
+									<p><a href="/admin/products">Example Product Title</a> $19.99</p>
+								</div>
+								<div class="grid-item large--one-quarter medium--one-half text-center">
+									<a href="/admin/products" class="demo-image">
+										Add a Product
+									</a>
+									<p><a href="/admin/products">Example Product Title</a> $19.99</p>
+								</div>
+								<div class="grid-item large--one-quarter medium--one-half text-center">
+									<a href="/admin/products" class="demo-image">
+										Add a Product
+									</a>
+									<p><a href="/admin/products">Example Product Title</a> $19.99</p>
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'F' %}
+		{% if settings.display_newsletter %}
+			<div class="newsletter margin-top">
+				<div class="newsletter-blur">
+					<div class="wrapper">
+						<div class="global-table">
+							<div class="global-row">
+								<div class="global-cell">
+									<div class="newsletter-intro">{{ settings.newsletter_intro }}</div>
+									{% include 'newsletter-form' %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'G' %}
+		{% if settings.use_homepage_post %}
+		<div class="wrapper frontpage-blog margin-top">
+			{% comment %}
+				Loop through three recent blog articles with the following code.
+
+				Since we're not on the blog template, we need to define the blog
+				handle we want to focus on. For this example we'll use the default 'news',
+				but you can create a blog page-specific content if you want.
+			{% endcomment %}
+			<h2 class="text-left">{{ settings.homepage_post_title }}</h2>
+			<div class="grid-blog">
+				{% assign idx = 1 %}
+				{% capture blog_handle %}{{ settings.home_blog_handle }}{% endcapture %}
+              
+				{% for article in blogs[blog_handle].articles limit:3 %}
+
+					<div class="grid-blog-item {% if idx == 1 %}open {% else %}{% if blogs[blog_handle].articles_count > 1 %} close{% endif %}{% endif %}">
+						<div class="grid-blog-item-wrapper">
+							<div class="post-image">
+								{% assign my_image_url=article.content | escape %}
+								{% if my_image_url contains '&lt;img' %}
+									{% assign my_image_url = my_image_url | split: 'src=&quot;' %}
+									{% assign my_image_url = my_image_url[1] | split: '&quot;' %}
+									{% assign my_image_url = my_image_url[0] | remove: '//cdn' %}
+									{% assign my_image_url = my_image_url | remove: 'http:http://' %}
+									{% assign my_image_url = my_image_url | remove: 'https:' %}
+									<img src="{{ my_image_url | prepend: 'http://cdn' }}" alt="" />
+								{% endif %}
+							</div>
+							<div class="post-info">
+								<span class="time" pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+									{{ article.published_at | date: '%B %d, %Y' }}
+								</span>
+								<h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+
+								{% comment %}
+									Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
+									Since this is just a listing page, you can either use the excerpt or truncate the full article.
+								{% endcomment %}
+								<div class="post-excerpt">
+									{% if article.excerpt.size > 0 %}
+										{{ article.excerpt }}
+									{% else %}
+										<p>{{ article.content | strip_html | truncatewords: 10 }}</p>
+									{% endif %}
+								</div>
+
+								{% comment %}
+									Show off meta information like number of comments and tags.
+								{% endcomment %}
+								<p><a class="blog-read-more" href="{{ article.url }}">Read more +</a></p>
+							</div>
+						</div>
+					</div>
+					{% assign idx = idx | plus: 1 %}
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'H' %}
+		{% if settings.use_brand %}
+		<div class="wrapper brand-logos margin-top">
+			<div class="carousellogos">
+				<h2 class="text-left">{{ settings.brandlogo_title }}</h2>
+				<ul class="slides">
+					{% if settings.use_brandlogo1 %}
+						<li>{% if settings.brandlogo1link != '' %}<a href="{{ settings.brandlogo1link }}" target="_blank">{{ 'brandlogo1.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo1.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo2 %}
+						<li>{% if settings.brandlogo2link != '' %}<a href="{{ settings.brandlogo2link }}" target="_blank">{{ 'brandlogo2.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo2.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo3 %}
+						<li>{% if settings.brandlogo3link != '' %}<a href="{{ settings.brandlogo3link }}" target="_blank">{{ 'brandlogo3.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo3.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo4 %}
+						<li>{% if settings.brandlogo4link != '' %}<a href="{{ settings.brandlogo4link }}" target="_blank">{{ 'brandlogo4.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo4.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo5 %}
+						<li>{% if settings.brandlogo5link != '' %}<a href="{{ settings.brandlogo5link }}" target="_blank">{{ 'brandlogo5.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo5.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo6 %}
+						<li>{% if settings.brandlogo6link != '' %}<a href="{{ settings.brandlogo6link }}" target="_blank">{{ 'brandlogo6.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo6.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo7 %}
+						<li>{% if settings.brandlogo7link != '' %}<a href="{{ settings.brandlogo7link }}" target="_blank">{{ 'brandlogo7.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo7.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo8 %}
+						<li>{% if settings.brandlogo8link != '' %}<a href="{{ settings.brandlogo8link }}" target="_blank">{{ 'brandlogo8.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo8.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo9 %}
+						<li>{% if settings.brandlogo9link != '' %}<a href="{{ settings.brandlogo9link }}" target="_blank">{{ 'brandlogo9.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo9.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+					{% if settings.use_brandlogo10 %}
+						<li>{% if settings.brandlogo10link != '' %}<a href="{{ settings.brandlogo10link }}" target="_blank">{{ 'brandlogo10.jpg' | asset_url | img_tag }}</a>{% else %}{{ 'brandlogo10.jpg' | asset_url | img_tag }}{% endif %}</li>
+					{% endif %}
+				</ul>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'I' %}
+		{% if settings.use_ribbon_bottom %}
+			<div class="ribbon-bottom margin-top">
+				<div class="wrapper">
+					{{ settings.ribbon_bottom_text }}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		{% endif %}
+	{% endif %}
+	
+	{% if word == 'J' %}
+		{% if settings.use_about %}
+		<div class="margin-top">
+			<div class="about-home wrapper">
+				<div class="grid-uniform">
+				{% if settings.use_about_video %}
+					{% assign about_class = 'grid-item large--one-half' %}
+				{% else %}
+					{% assign about_class = 'grid-item large--one-whole' %}
+				{% endif %}
+				
+					<div class="about-text {{ about_class }}">
+						<h3 class="about-title">{{ settings.about_title }}</h3>
+						<div class="about-desc">{{ settings.about_desc }}</div>
+						{% if settings.use_about_link %}
+						<p class="about-link"><a class="btn btn-secondary" href="{{ settings.about_link }}">{{ settings.about_link_text }}</a></p>
+						{% endif %}
+					</div>
+				{% if settings.use_about_video %}
+					<div class="about-video text-center {{ about_class }}">
+						{{ settings.about_video }}
+					</div>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	{% endif %}
+{% endfor %}

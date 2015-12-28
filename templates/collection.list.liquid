@@ -1,0 +1,115 @@
+{% comment %}
+
+	By using a variation of the 'view all' parameter technique, you can create
+	a custom layout for any template by adding ?view=xxxx
+
+	In this example, you can have a list view of your collection page by going to
+	/collections/all?view=list
+
+	For more information on collection tags:
+		- http://docs.shopify.com/themes/liquid-variables/collection
+
+	For more information on the ?view parameter:
+		- http://docs.shopify.com/support/configuration/store-customization/can-i-show-more-than-50-products-on-my-homepage-can-i-add-a-view-all-function-to-my-collection-pages#add-view-all
+
+{% endcomment %}
+{% capture product_per_page %}{{ settings.collection_page_amount }}{% endcapture %}
+{% paginate collection.products by product_per_page %}
+
+{% comment %}
+	Use .grid--rev so that the collection tags appear below the products on mobile
+{% endcomment %}
+<header class="page-header">
+	<div class="wrapper">
+		<div class="global-table">
+			<div class="global-row">
+				<div class="global-cell page-title">
+					<h2>{{ collection.title }}</h2>
+				</div>
+				<div class="global-cell page-breadcrumb">
+					{% include 'breadcrumb' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+{% if settings.sidebar_collection %}
+	{% assign collection_grid_class = 'three-quarters' %}
+{% else %}
+	{% assign collection_grid_class = 'one-whole' %}
+{% endif %}
+{% if settings.sidebar_collection_position == 'left' %}
+	{% assign sidebar_position_class = 'sidebar_left' %}
+{% else %}
+	{% assign sidebar_position_class = 'sidebar_right' %}
+{% endif %}
+<div class="margin-top product-collection collection collection-list-view">
+	<div class="wrapper">
+		<div class="grid">
+
+			<div class="grid-item large--{{ collection_grid_class }} {{ sidebar_position_class }}">
+
+				<header class="section-header global-table">
+					<div class="global-row">
+						{% if paginate.pages > 1 %}
+						<div class="top-pagination global-cell">
+							{% include 'pagination-custom' %}
+						</div>
+						{% endif %}
+						<div class="section-header--right global-cell">
+					
+							{% include 'collection-sorting' %}
+							{% include 'collection-views' %}
+						</div>
+					</div>
+				</header>
+
+				{% comment %}
+					Use class grid-uniform to have evenly sized columns clear
+					each other properly at each breakpoint.
+				{% endcomment %}
+				<div class="grid-uniform">
+
+					{% comment %}
+						Loop through our products in the current collection.
+						See the snippet 'product-grid-item' for the layout.
+					{% endcomment %}
+					{% for product in collection.products %}
+
+						{% include 'product-list-item' %}
+
+					{% else %}
+
+						<div class="grid-item">
+							<p>Sorry, there are no products matching your search.</p>
+						</div>
+
+					{% endfor %}
+
+				</div>
+
+				<header class="section-header global-table">
+					<div class="global-row">
+						{% if paginate.pages > 1 %}
+						<div class="top-pagination global-cell">
+							{% include 'pagination-custom' %}
+						</div>
+						{% endif %}
+						<div class="section-header--right global-cell">
+					
+							{% include 'collection-sorting' %}
+							{% include 'collection-views' %}
+						</div>
+					</div>
+				</header>
+
+			</div>
+			{% if settings.sidebar_collection %}
+			<div class="grid-item large--one-quarter sidebar {{ sidebar_position_class }}">
+				{% include 'collection-sidebar' %}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endpaginate %}

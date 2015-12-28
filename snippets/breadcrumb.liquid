@@ -1,0 +1,53 @@
+{% comment %}
+	Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' or template == 'cart' %}
+
+<div class="breadcrumb">
+	<a href="/" title="Back to the frontpage"><i class="fa fa-home"></i>Home</a>
+
+	{% if template contains 'product' %}
+
+		{% if collection %}
+			<span class="separator">/</span>
+			{% if collection.handle %}
+				 {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+				 {{ collection.title | link_to: url }}
+			{% endif %}
+		{% endif %}
+		<span class="separator">/</span>
+		<span>{{ product.title }}</span>
+
+	{% elsif template contains 'collection' and collection.handle %}
+
+		{% if current_tags %}
+			<span class="separator">/</span>
+			{% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+			{{ collection.title | link_to: url }}
+			<span class="separator">/</span>
+			<span>{{ current_tags.first }}</span>
+		{% else %}
+			<span class="separator">/</span>
+			<span>{{ collection.title }}</span>
+		{% endif %}
+
+	{% elsif template == 'article' %}
+
+		<span class="separator">/</span>
+		{{ blog.title | link_to: blog.url }}
+		<span class="separator">/</span>
+		<span>{{ article.title }}</span>
+
+	{% elsif template contains 'page' %}
+
+	 <span class="separator">/</span>
+	 <span>{{ page.title }}</span>
+
+	{% else %}
+
+	 <span class="separator">/</span>
+	 <span>{{ page_title }}</span>
+
+	{% endif %}
+</div>
+{% endunless %}

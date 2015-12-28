@@ -1,0 +1,54 @@
+<ul class="site-nav">
+	{% for link in linklists.main-menu.links %}
+		{% if linklists[link.handle] != empty %}
+			<li class="{% if link.active %}site-nav--active active{% endif %} parent level-0">
+				<a href="{{ link.url }}">{{ link.title }}</a>
+				<ul class="site-nav--dropdown">
+					{% for child_link in linklists[link.handle].links %}
+						{% if linklists[child_link.handle] != empty %}
+						<li class="parent level-1 {% if child_link.active %}active{% endif %}">
+							{{ child_link.title | link_to: child_link.url }}
+							<ul class="site-nav--dropdown">
+							{% for grand_child_link in linklists[child_link.handle].links %}
+							<li class="level-2 {% if grand_child_link.active %} active {% endif %}">
+								{{ grand_child_link.title | link_to: grand_child_link.url }}
+							</li>
+							{% endfor %}
+							</ul>
+						</li>
+						{% else %}
+						<li class="level-1 {% if child_link.active %}active{% endif %}">
+							{{ child_link.title | link_to: child_link.url }}
+						</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			</li>
+		{% else %}
+			<li class="{% if link.active %}site-nav--active active{% endif %} level-0">
+				<a href="{{ link.url }}">{{ link.title }}</a>
+			</li>
+		{% endif %}
+	{% endfor %}
+	{% comment %}
+		If customer accounts are enabled, provide login and create account links
+	{% endcomment %}
+	{% if shop.customer_accounts_enabled %}
+		<li class="level-0 parent account-link">
+		{% if customer %}
+			<a href="/account">Account</a>
+			<ul class="site-nav--dropdown">
+				<li class="level-1 account-details-link"><a href="/account">Account Details</a></li>
+				<li class="level-1">{{ 'Log Out' | customer_logout_link }}</li>
+			</ul>
+			
+		{% else %}
+			{{ 'Account' | customer_login_link }}
+			<ul class="site-nav--dropdown">
+				<li class="level-1 login-link">{{ 'Login' | customer_login_link }}</li>
+				<li class="level-1 register-link">{{ 'Register' | customer_register_link }}</li>
+			</ul>
+		{% endif %}
+		</li>
+	{% endif %}
+</ul>

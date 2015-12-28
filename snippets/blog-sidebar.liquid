@@ -1,0 +1,49 @@
+{% comment %}
+	Recent blog posts
+{% endcomment %}
+{% if settings.sidebar_recent_article %}
+{% capture blog_handle %}{{ settings.home_blog_handle }}{% endcapture %}
+<div class="sidebar-block">
+	<h5>{{ settings.sidebar_recent_article_title }}</h5>
+	{% for article in blogs[blog_handle].articles limit:3 %}
+	<div class="article-row grid">
+		<div class="post-image grid-item large--one-whole medium--one-third">
+			{% assign my_image_url=article.content | escape %}
+			{% if my_image_url contains '&lt;img' %}
+				{% assign my_image_url = my_image_url | split: 'src=&quot;' %}
+				{% assign my_image_url = my_image_url[1] | split: '&quot;' %}
+				{% assign my_image_url = my_image_url[0] | remove: '//cdn' %}
+				{% assign my_image_url = my_image_url | remove: 'http:http://' %}
+				{% assign my_image_url = my_image_url | remove: 'https:' %}
+				<a href="{{ article.url }}"><img src="{{ my_image_url | prepend: 'http://cdn' }}" alt="" /></a>
+			{% endif %}
+		</div>
+		<div class="post-info grid-item large--one-whole medium--two-thirds">
+			<a href="{{ article.url }}">{{ article.title }}</a>
+			<span class="time" pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+				<i class="fa fa-calendar"></i>{{ article.published_at | date: '%B %d, %Y' }}
+			</span>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endif %}
+{% comment %}
+	Blog tags
+{% endcomment %}
+{% if settings.sidebar_blog_tag %}
+<div class="sidebar-block tags">
+	{% if blogs[blog_handle].tags.size > 0 %}
+	<h5>{{ settings.sidebar_blog_tag_title }}</h5>
+	<ul>
+		{% for tag in blogs[blog_handle].tags %}
+			{% if current_tags contains tag %}
+			<li class="active-filter"><a>{{ tag }}</a></li>
+			{% else %}
+			<li>{{ tag | link_to_tag: tag }}</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endif %}
+</div>
+{% endif %}
